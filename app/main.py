@@ -1,7 +1,7 @@
-from flask import Flask
+from flask import Flask, requests
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return"<p>This is the beginning of something great</p>"
+    request  = requests.get()
