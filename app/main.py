@@ -1,7 +1,8 @@
-from flask import Flask, requests
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    request  = requests.get()
+    request = request.get()
+    return jsonify(request.json())
