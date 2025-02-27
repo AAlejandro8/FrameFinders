@@ -1,0 +1,26 @@
+# FlickPick
+
+A movie recommendation web app built with Flask Discover your next favorite film with personalized picks powered by The Movie Database (TMDB).
+
+## Features
+- Browse trending movies.
+- Get tailored recommendations based on your preferences.
+- Search for films by title, genre, or actor.
+- Responsive design for desktop and mobile.
+
+## Tech Stack
+- **Backend**: Flask (Python) - Lightweight API serving movie data.
+- **Frontend**: Jinja2 - Templating engine for dynamic HTML.
+- **API**: The Movie Database (TMDB) - Movie data and metadata.
+- **Source Control**: Git - Collaborative development.
+
+## Prerequisites
+- Python 3.9+
+- TMDB API key (sign up at [themoviedb.org](https://www.themoviedb.org/))
+
+## Setup
+
+### Clone the Repository
+```bash
+git clone https://github.com/AAlejandro8/FrameFinder
+cd flickpick
