@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html style = "background-color: #FFF">
+      <head>
+            <title> Movie Analytics</title>
+            
+      </head>
+      <body>
+            <h1> Welcome to Movie Analytics!</h1>
+            <p>Here you can find whats trending and upcoming to help fuel your cinema needs!</p>
+            {% for movie in movies %}
+            <div id="titleContainer">
+                  <ul>
+                        <li>{{ movie.original_title }}</li>
+                  </ul>
+            </div>
+            <div id="descriptionContainer"> 
+                  <p> {{ movie.overview }} </p>
+            </div>
+
+            {% endfor %}
+      </body>
+</html>
