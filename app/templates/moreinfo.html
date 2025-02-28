@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %} Movie - {{ movie.original_title }} {% endblock %}
+
+{% block content %}
+
+<div id="movieCard">
+  {% if movie.backdrop_path %}
+  <div id="backdropContainer">
+      <img src="https://image.tmdb.org/t/p/w500{{ movie.backdrop_path }}" alt="{{ movie.original_title }} backdrop" class="movie-backdrop">
+  </div>
+  {% endif %}
+
+  
+  <h1> {{ movie.original_title }}</h1>
+  <p>Release Date: {{ movie.release_date }}</p><br>
+ 
+  <p> Overview: {{ movie.overview }}</p>
+
+
+{% endblock %}

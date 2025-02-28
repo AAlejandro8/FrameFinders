@@ -3,13 +3,31 @@
 {% block title %}Trending Movies{% endblock %}
 
 {% block content %}
+    <h2> Trending Movies</h2>
     {% for movie in movies %}
+
+    <div id="movieCard">
+        {% if movie.backdrop_path %}
+        <div id="backdropContainer">
+            <a href="{{ url_for('movie_info', movie_id=movie.id) }}">
+                <img src="https://image.tmdb.org/t/p/w500{{ movie.backdrop_path }}" alt="{{ movie.original_title }} backdrop" class="movie-backdrop">
+            </a>
+        </div>
+        {% endif %}
+
+
     <div id="titleContainer">
         <ul>
-            <li>{{ movie.original_title }}<br> 
-            {{ movie.release_date }}
-            </li>
+            <h3>
+                  <a href="{{ url_for('movie_info', movie_id=movie.id) }}" 
+                  style="color: inherit; text-decoration: none;" >
+                  {{ movie.original_title }}
+                  </a>
+
             <br> 
+            {{ movie.release_date }}
+            </h3> 
+
             <p>Genre(s):</p>
             {% for genre in movie.genre_names %}
             <li>{{ genre }}</li>

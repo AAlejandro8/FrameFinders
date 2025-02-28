@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 
+{% block title %} Movie - {{ query }} {% endblock %}
+
 {% block content %}
 
+<h2>Searched:  {{ query }} </h2>
 {% for movie in movies %}
 <div id="titleContainer">
     <ul>
-        <li>{{ movie.original_title }}<br> 
+        <h3>{{ movie.original_title }}<br> 
         {{ movie.release_date }}
-        </li>
+        </h3>
         <br> 
         <p>Genre(s):</p>
         {% for genre in movie.genre_names %}

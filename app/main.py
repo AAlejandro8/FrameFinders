@@ -33,7 +33,7 @@ def get_movies_with_genre(movies):
       
 app = Flask(__name__)
 
-@app.route("/",methods = ["GET", "POST"])
+@app.route("/",methods = ["GET"])
 def home():
       trending = get_trending_movies()
       movies_with_genre = get_movies_with_genre(trending)
@@ -49,4 +49,12 @@ def search():
       movies = get_movies_with_genre(response)
       
       return render_template("search.html", 
-                             movies=movies)
+                             movies=movies, query=query)
+
+@app.route("/movie/<movie_id>", methods=["GET"])
+def movie_info(movie_id):
+      url = f'https://api.themoviedb.org/3/movie/{movie_id}'
+      response = requests.get(url, headers=headers)
+      movie = response.json()
+      
+      return render_template("moreinfo.html", movie=movie)
