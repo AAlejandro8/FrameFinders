@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for movie in movies %}
+<div id="titleContainer">
+    <ul>
+        <li>{{ movie.original_title }}<br> 
+        {{ movie.release_date }}
+        </li>
+        <br> 
+        <p>Genre(s):</p>
+        {% for genre in movie.genre_names %}
+        <li>{{ genre }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<div id="descriptionContainer"> 
+    <p>{{ movie.overview }}</p>
+</div>
+{% endfor %}
+
+{% endblock %}
