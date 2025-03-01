@@ -5,8 +5,9 @@
 {% block content %}
     <h2> Trending Movies</h2>
     {% for movie in movies %}
-
+<!-- Current movie backdrop -->
     <div id="movieCard">
+        <!-- Check if a backdrop is available  -->
         {% if movie.backdrop_path %}
         <div id="backdropContainer">
             <a href="{{ url_for('movie_info', movie_id=movie.id) }}">
@@ -15,9 +16,10 @@
         </div>
         {% endif %}
 
-
+        <!-- Title of the movie and the data -->
     <div id="titleContainer">
         <ul>
+            <!-- Clickable backdrop for more info on the movie -->
             <h3>
                   <a href="{{ url_for('movie_info', movie_id=movie.id) }}" 
                   style="color: inherit; text-decoration: none;" >
@@ -25,15 +27,20 @@
                   </a>
 
             <br> 
+
             {{ movie.release_date }}
+
             </h3> 
 
             <p>Genre(s):</p>
             {% for genre in movie.genre_names %}
             <li>{{ genre }}</li>
             {% endfor %}
+
         </ul>
     </div>
+
+    <!-- Brief description of the movie displayed -->
     <div id="descriptionContainer"> 
         <p>{{ movie.overview }}</p>
     </div>

@@ -4,15 +4,18 @@
 
 {% block content %}
 
+<!-- Movie back drop of the movie picked -->
 <div id="movieCard">
+  <!-- Check if a backdrop is available  -->
   {% if movie.backdrop_path %}
   <div id="backdropContainer">
       <img src="https://image.tmdb.org/t/p/w500{{ movie.backdrop_path }}" alt="{{ movie.original_title }} backdrop" class="movie-backdrop">
   </div>
   {% endif %}
 
-  
+  <!-- More info on the movie picked -->
   <h1> {{ movie.original_title }}</h1>
+  
   <p>Release Date: {{ movie.release_date }}</p><br>
  
   <p> Overview: {{ movie.overview }}</p>

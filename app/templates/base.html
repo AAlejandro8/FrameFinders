@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html style="background-color: #FFF">
     <head>
+        <!-- page title -->
         <title>{% block title %}Movie Analytics{% endblock %}</title>
+        <!-- Link to home page -->
         <a href="/">Home</a>
     </head>
     <body>
         <h1>Welcome to Movie Analytics!</h1>
         
+        <!-- Search bar -->
         <div id="searchContainer">
-
             <form action="/search" method="GET">
                 <input type="search" id="query" name="q" placeholder="Search...">
                 <button>Search</button>
@@ -16,6 +18,7 @@
 
         </div>
 
+        <!-- Dynamic way to render pages -->
         {% block content %}
         
         {% endblock %}
