@@ -1,26 +1,64 @@
 {% extends "base.html" %}
 
-{% block title %} Movie - {{ query }} {% endblock %}
+{% block title %}Search - {{ query }}{% endblock %}
 
 {% block content %}
-
-<h2>Searched:  {{ query }} </h2>
-{% for movie in movies %}
-<div id="titleContainer">
-    <ul>
-        <h3>{{ movie.original_title }}<br> 
-        {{ movie.release_date }}
-        </h3>
-        <br> 
-        <p>Genre(s):</p>
-        {% for genre in movie.genre_names %}
-        <li>{{ genre }}</li>
+    <h2>Search Results: {{ query }}</h2>
+    
+    <!-- Using card-group to display movies in groups of 3 -->
+    <div class="card-group">
+        {% for movie in movies %}
+            <div class="card">
+                <!-- Movie Image -->
+                {% if movie.backdrop_path %}
+                <a href="{{ url_for('movie_info', movie_id=movie.id) }}">
+                    <img src="https://image.tmdb.org/t/p/w500{{ movie.backdrop_path }}" 
+                         class="card-img-top" 
+                         alt="{{ movie.original_title }} backdrop">
+                </a>
+                {% else %}
+                <!-- No backdrop provided -->
+                <a href="{{ url_for('movie_info', movie_id=movie.id) }}">
+                    <img src="https://image.tmdb.org/t/p/w500{{ movie.backdrop_path }}" 
+                         class="card-img-top" 
+                         alt=" ">
+                </a>
+                {% endif %}
+                
+                <!-- Card Body -->
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{{ url_for('movie_info', movie_id=movie.id) }}">
+                            {{ movie.original_title }}
+                        </a>
+                    </h5>
+                    <p class="card-text">{{ movie.overview[:150] }}
+                        {% if movie.overview|length > 150 %}
+                        ...
+                        {% endif %}</p>
+                </div>
+                
+                <!-- Card Footer -->
+                <div class="card-footer">
+                    <small class="text-body-secondary">
+                        {% for genre in movie.genre_names %}
+                            <span class="badge bg-secondary me-1">{{ genre }}</span>
+                        {% endfor %}
+                    </small>
+                </div>
+            </div>
+            
+            <!-- Break into new card-group after every 3 movies -->
+            {% if loop.index is divisibleby 3 and not loop.last %}
+                </div>
+                <div class="card-group mt-4">
+            {% endif %}
         {% endfor %}
-    </ul>
-</div>
-<div id="descriptionContainer"> 
-    <p>{{ movie.overview }}</p>
-</div>
-{% endfor %}
-
+    </div>
+    
+    {% if movies|length == 0 %}
+    <div class="alert alert-info mt-4 justify-content-center">
+        No movies found matching "{{ query }}". Try a different search term.
+    </div>
+    {% endif %}
 {% endblock %}

@@ -1,48 +1,55 @@
 {% extends "base.html" %}
 
-{% block title %}Trending Movies{% endblock %}
+{% block title %}Home - Trending Movies{% endblock %}
 
 {% block content %}
-    <h2> Trending Movies</h2>
-    {% for movie in movies %}
-<!-- Current movie backdrop -->
-    <div id="movieCard">
-        <!-- Check if a backdrop is available  -->
-        {% if movie.backdrop_path %}
-        <div id="backdropContainer">
-            <a href="{{ url_for('movie_info', movie_id=movie.id) }}">
-                <img src="https://image.tmdb.org/t/p/w500{{ movie.backdrop_path }}" alt="{{ movie.original_title }} backdrop" class="movie-backdrop">
-            </a>
-        </div>
-        {% endif %}
+    <h2>Home - Trending Movies</h2>
+    
+    <!-- Using card-group to display movies in groups of 3 -->
+    <div class="card-group">
+        {% for movie in movies %}
 
-        <!-- Title of the movie and the data -->
-    <div id="titleContainer">
-        <ul>
-            <!-- Clickable backdrop for more info on the movie -->
-            <h3>
-                  <a href="{{ url_for('movie_info', movie_id=movie.id) }}" 
-                  style="color: inherit; text-decoration: none;" >
-                  {{ movie.original_title }}
-                  </a>
+            <div class="card">
 
-            <br> 
+                <!-- Movie Image -->
+                {% if movie.backdrop_path %}
+                <a href="{{ url_for('movie_info', movie_id=movie.id) }}">
+                    <img src="https://image.tmdb.org/t/p/w500{{ movie.backdrop_path }}" 
+                         class="card-img-top" 
+                         alt="{{ movie.original_title }} backdrop">
+                </a>
+                {% endif %}
+                
+                <!-- Card Body -->
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{{ url_for('movie_info', movie_id=movie.id) }}"
+                           style="color: inherit; text-decoration: none;">
+                            {{ movie.original_title }}
+                        </a>
+                    </h5>
+                    <p class="card-text">{{ movie.overview[:150] }}
+                        {% if movie.overview|length > 150 %}
+                        ...
+                        {% endif %}</p>
+                </div>
+                
+                <!-- Card Footer -->
+                <div class="card-footer">
+                    <small class="text-body-secondary">
+                        {% for genre in movie.genre_names %}
+                            <span class="badge bg-secondary me-1">{{ genre }}</span>
+                        {% endfor %}
+                    </small>
+                </div>
+            </div>
+            
+            <!-- Break into new card-group after every 3 movies -->
+            {% if loop.index is divisibleby 3 and not loop.last %}
+                </div>
+                <div class="card-group mt-4">
+            {% endif %}
 
-            {{ movie.release_date }}
-
-            </h3> 
-
-            <p>Genre(s):</p>
-            {% for genre in movie.genre_names %}
-            <li>{{ genre }}</li>
-            {% endfor %}
-
-        </ul>
+        {% endfor %}
     </div>
-
-    <!-- Brief description of the movie displayed -->
-    <div id="descriptionContainer"> 
-        <p>{{ movie.overview }}</p>
-    </div>
-    {% endfor %}
 {% endblock %}
