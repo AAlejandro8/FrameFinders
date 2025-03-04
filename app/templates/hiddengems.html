@@ -1,40 +1,49 @@
 {% extends "base.html" %}
 
-{% block title %}Trending Movies{% endblock %}
+{% block title %}Hidden Gems{% endblock %}
 
 {% block content %}
-    <h2 class="mb-4">Trending Movies of the Week</h2>
+    <h2 class="mb-4">Hidden Gems</h2>
     
     <!-- Using card-group to display movies in groups of 3 -->
     <div class="card-group">
-        {% for movie in movies %}
+        {% for gem in gems %}
 
             <div class="card m-2">
-                <!-- Movie Image -->
-                {% if movie.backdrop_path %}
-                <a href="{{ url_for('movie_info', movie_id=movie.id) }}">
-                    <img src="https://image.tmdb.org/t/p/w500{{ movie.backdrop_path }}" 
+                <!-- Gem Image -->
+                {% if gem.backdrop_path %}
+                <a href="{{ url_for('movie_info', movie_id=gem.id) }}">
+                    <img src="https://image.tmdb.org/t/p/w500{{ gem.backdrop_path }}" 
                          class="card-img-top" 
-                         alt="{{ movie.original_title }} backdrop">
+                         alt="{{ gem.original_title }} backdrop">
                 </a>
+                {% else %}
+                    <!-- Fallback if no backdrop, using poster_path if available -->
+                    {% if gem.poster_path %}
+                    <a href="{{ url_for('movie_info', movie_id=gem.id) }}">
+                        <img src="https://image.tmdb.org/t/p/w500{{ gem.poster_path }}" 
+                             class="card-img-top" 
+                             alt="{{ gem.original_title }} poster">
+                    </a>
+                    {% endif %}
                 {% endif %}
                 
                 <!-- Card Body -->
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">
-                        <a href="{{ url_for('movie_info', movie_id=movie.id) }}"
+                        <a href="{{ url_for('movie_info', movie_id=gem.id) }}"
                            style="color: #03dac6; text-decoration: none;">
-                            {{ movie.title }}
+                            {{ gem.title }}
                         </a>
                     </h5>
-                    <p class="card-text flex-grow-1">{{ movie.overview[:150] }}
-                        {% if movie.overview|length > 150 %}
+                    <p class="card-text flex-grow-1">{{ gem.overview[:150] }}
+                        {% if gem.overview|length > 150 %}
                         <span style="color: #bb86fc">...</span>
                         {% endif %}
                     </p>
                     
                     <!-- Read more button -->
-                    <a href="{{ url_for('movie_info', movie_id=movie.id) }}" 
+                    <a href="{{ url_for('movie_info', movie_id=gem.id) }}" 
                        class="btn btn-sm btn-outline-info mt-auto">
                         Read More
                     </a>
@@ -43,14 +52,14 @@
                 <!-- Card Footer -->
                 <div class="card-footer">
                     <small class="text-body-secondary">
-                        {% for genre in movie.genre_names %}
+                        {% for genre in gem.genre_names %}
                             <span class="badge bg-primary me-1 mb-1">{{ genre }}</span>
                         {% endfor %}
                     </small>
                 </div>
             </div>
             
-            <!-- Break into new card-group after every 3 movies -->
+            <!-- Break into new card-group after every 3 gems -->
             {% if loop.index is divisibleby 3 and not loop.last %}
                 </div>
                 <div class="card-group">

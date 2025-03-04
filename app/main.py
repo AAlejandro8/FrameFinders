@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 import os
 import requests
 
+app = Flask(__name__)
 # authentication for the API
 api_key = os.environ["TMD_API_KEY"]
 read_key = os.environ["TMD_READ_ACCESS_KEY"]
@@ -12,7 +13,7 @@ headers = {
 
 # get current trending movies currently, day of.
 def get_trending_movies():
-      url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US"
+      url = "https://api.themoviedb.org/3/trending/movie/week?language=en-US"
       response = requests.get(url, headers=headers)
       return response
 
@@ -37,7 +38,6 @@ def get_movies_with_genre(movies):
 
       return movie_result
       
-app = Flask(__name__)
 
 
 # main page 
@@ -75,3 +75,17 @@ def movie_info(movie_id):
       movie = response.json()
       
       return render_template("moreinfo.html", movie=movie)
+
+@app.route("/hidden-gems", methods=["GET"])
+def get_gems():
+      url = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.asc&vote_average.gte=7&vote_count.gte=50"
+
+      response = requests.get(url, headers=headers)
+      gem_movies_with_genre = get_movies_with_genre(response)
+
+      gems = [
+        movie for movie in gem_movies_with_genre
+        if movie.get('popularity', 0) <= 50
+      ]
+
+      return render_template("hiddengems.html", gems=gems)

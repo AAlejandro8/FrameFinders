@@ -1,13 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %} Movie - {{ movie.original_title }} {% endblock %}
+{% block title %} Movie - {{ movie.title }} {% endblock %}
 
 {% block content %}
 <div class="container mt-4">
   <!-- Movie details card -->
   <div class="card mb-5">
     <div class="card-header bg-dark">
-      <h1 class="mb-0" style="color: #03dac6">{{ movie.original_title }}</h1>
+      {% if movie.tagline %}
+      <h1 class="mb-0" style="color: #03dac6">{{ movie.title }} - "{{ movie.tagline }}"</h1>
+      {% else %}
+      <h1 class="mb-0" style="color: #03dac6">{{ movie.title }}</h1>
+      {% endif %}
     </div>
     
     <div class="card-body">
@@ -44,7 +48,7 @@
               <div class="info-box p-3 rounded" style="background-color: #212121;">
                 <h5 style="color: #bb86fc;">Rating</h5>
                 <p class="mb-0">
-                  <span class="badge bg-warning text-dark">{{ movie.vote_average|round(1, 'common') }}</span>
+                  <span class="badge bg-warning text-white">{{ movie.vote_average|round(1, 'common') }}</span>
                   from {{ movie.vote_count }} votes
                 </p>
               </div>
