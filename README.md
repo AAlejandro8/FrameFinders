@@ -13,6 +13,7 @@ A movie recommendation web app built with Flask Discover your next favorite film
 
 - **Backend**: Flask (Python) - Lightweight API serving movie data.
 - **Frontend**: Jinja2 - Templating engine for dynamic HTML.
+  - **Styles**: Bootstrap - Easy to use CSS style sheets
 - **API**: The Movie Database (TMDB) - Movie data and metadata.
 - **Source Control**: Git - Controlled devlopment.
 
