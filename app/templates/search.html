@@ -3,12 +3,12 @@
 {% block title %}Search - {{ query }}{% endblock %}
 
 {% block content %}
-    <h2>Search Results: {{ query }}</h2>
+    <h2 class="mb-4">Search Results: <span style="color: #03dac6">{{ query }}</span></h2>
     
     <!-- Using card-group to display movies in groups of 3 -->
     <div class="card-group">
         {% for movie in movies %}
-            <div class="card">
+            <div class="card m-2">
                 <!-- Movie Image -->
                 {% if movie.backdrop_path %}
                 <a href="{{ url_for('movie_info', movie_id=movie.id) }}">
@@ -18,31 +18,37 @@
                 </a>
                 {% else %}
                 <!-- No backdrop provided -->
-                <a href="{{ url_for('movie_info', movie_id=movie.id) }}">
-                    <img src="https://image.tmdb.org/t/p/w500{{ movie.backdrop_path }}" 
-                         class="card-img-top" 
-                         alt=" ">
-                </a>
+                <div class="card-img-top d-flex align-items-center justify-content-center bg-dark" style="height: 200px;">
+                    <span class="text-muted">No image available</span>
+                </div>
                 {% endif %}
                 
                 <!-- Card Body -->
-                <div class="card-body">
+                <div class="card-body d-flex flex-column">
                     <h5 class="card-title">
-                        <a href="{{ url_for('movie_info', movie_id=movie.id) }}">
+                        <a href="{{ url_for('movie_info', movie_id=movie.id) }}"
+                           style="color: #03dac6; text-decoration: none;">
                             {{ movie.original_title }}
                         </a>
                     </h5>
-                    <p class="card-text">{{ movie.overview[:150] }}
+                    <p class="card-text flex-grow-1">{{ movie.overview[:150] }}
                         {% if movie.overview|length > 150 %}
-                        ...
-                        {% endif %}</p>
+                        <span style="color: #bb86fc">...</span>
+                        {% endif %}
+                    </p>
+                    
+                    <!-- Read more button -->
+                    <a href="{{ url_for('movie_info', movie_id=movie.id) }}" 
+                       class="btn btn-sm btn-outline-info mt-auto">
+                        Read More
+                    </a>
                 </div>
                 
                 <!-- Card Footer -->
                 <div class="card-footer">
                     <small class="text-body-secondary">
                         {% for genre in movie.genre_names %}
-                            <span class="badge bg-secondary me-1">{{ genre }}</span>
+                            <span class="badge bg-primary me-1 mb-1">{{ genre }}</span>
                         {% endfor %}
                     </small>
                 </div>
@@ -51,14 +57,19 @@
             <!-- Break into new card-group after every 3 movies -->
             {% if loop.index is divisibleby 3 and not loop.last %}
                 </div>
-                <div class="card-group mt-4">
+                <div class="card-group">
             {% endif %}
         {% endfor %}
     </div>
     
     {% if movies|length == 0 %}
-    <div class="alert alert-info mt-4 justify-content-center">
-        No movies found matching "{{ query }}". Try a different search term.
+    <div class="alert alert-info mt-4 text-center">
+        <h4 class="alert-heading">No Results Found</h4>
+        <p>No movies found matching "<strong>{{ query }}</strong>". Try a different search term.</p>
+        <hr>
+        <p class="mb-0">
+            <a href="/trending" class="btn btn-outline-info">Browse Trending Movies</a>
+        </p>
     </div>
     {% endif %}
 {% endblock %}

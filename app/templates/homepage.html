@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="container-fluid p-5 rounded-3 text-center mb-5" style="background: linear-gradient(135deg, #424242 0%, #212121 100%);">
+    <h1 class="display-4" style="color: #bb86fc">Welcome to FlickFinder</h1>
+    <p class="lead">Discover trending movies, hidden gems, and personalized recommendations.</p>
+    <a class="btn btn-outline-info btn-lg mt-3" href="/trending" role="button">Explore Trending Movies</a>
+</div>
+
+<!-- Features Section -->
+<div class="container my-5">
+    <div class="row text-center g-4">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&auto=format&fit=crop" class="card-img-top" alt="Discover Movies">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #03dac6">Discover Movies</h5>
+                    <p class="card-text">Browse through an extensive collection of movies to find your next favorite film.</p>
+                    <a href="/search?q=2025" class="btn btn-outline-info mt-2">Explore Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=500&auto=format&fit=crop" class="card-img-top" alt="Trending Now">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #03dac6">Trending Now</h5>
+                    <p class="card-text">See what movies are trending and enjoy the latest hits in one click.</p>
+                    <a href="/trending" class="btn btn-outline-info mt-2">Trending Movies</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?w=500&auto=format&fit=crop" class="card-img-top" alt="Recommendations">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #03dac6">Hidden Gems</h5>
+                    <p class="card-text">Find Hidden Gems which are usually over shadowed by big releases.</p>
+                    <a href="/trending" class="btn btn-outline-info mt-2">Discover Gems</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer Section -->
+<footer class="text-center py-4 mt-5" style="background-color: #0a0a0a; border-top: 1px solid #333;">
+    <div class="container">
+        <p class="mb-0">&copy; 2025 FlickFinder. All rights reserved.</p>
+    </div>
+</footer>
+{% endblock %}

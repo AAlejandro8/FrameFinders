@@ -41,8 +41,14 @@ app = Flask(__name__)
 
 
 # main page 
-@app.route("/",methods = ["GET"])
+@app.route("/", methods = ["GET"])
 def home():
+      return render_template("homepage.html")
+
+
+# trending page of the week 
+@app.route("/trending", methods=["GET"])
+def trending_movies():
       trending = get_trending_movies()
       movies_with_genre = get_movies_with_genre(trending)
       

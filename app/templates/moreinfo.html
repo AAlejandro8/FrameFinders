@@ -3,22 +3,85 @@
 {% block title %} Movie - {{ movie.original_title }} {% endblock %}
 
 {% block content %}
+<div class="container mt-4">
+  <!-- Movie details card -->
+  <div class="card mb-5">
+    <div class="card-header bg-dark">
+      <h1 class="mb-0" style="color: #03dac6">{{ movie.original_title }}</h1>
+    </div>
+    
+    <div class="card-body">
+      <div class="row">
+        <!-- Movie backdrop image -->
+        <div class="col-md-12 mb-4">
+          {% if movie.backdrop_path %}
+          <div class="text-center">
+            <img src="https://image.tmdb.org/t/p/w1280{{ movie.backdrop_path }}" 
+                 alt="{{ movie.original_title }} backdrop" 
+                 class="movie-backdrop img-fluid rounded">
+          </div>
+          {% endif %}
+        </div>
+        
+        <!-- Movie info -->
+        <div class="col-md-12">
+          <div class="row mb-3">
+            <div class="col-md-3 col-sm-6">
+              <div class="info-box p-3 rounded" style="background-color: #212121;">
+                <h5 style="color: #bb86fc;">Release Date</h5>
+                <p class="mb-0">{{ movie.release_date }} ({{ movie.status }})</p>
+              </div>
+            </div>
 
-<!-- Movie back drop of the movie picked -->
-<div id="movieCard">
-  <!-- Check if a backdrop is available  -->
-  {% if movie.backdrop_path %}
-  <div id="backdropContainer">
-      <img src="https://image.tmdb.org/t/p/w500{{ movie.backdrop_path }}" alt="{{ movie.original_title }} backdrop" class="movie-backdrop">
+            <div class="col-md-3 col-sm-6">
+              <div class="info-box p-3 rounded" style="background-color: #212121;">
+                <h5 style="color: #bb86fc;">Revenue</h5>
+                <p class="mb-0">${{ "{:,}".format(movie.revenue) }}</p>
+              </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6">
+              <div class="info-box p-3 rounded" style="background-color: #212121;">
+                <h5 style="color: #bb86fc;">Rating</h5>
+                <p class="mb-0">
+                  <span class="badge bg-warning text-dark">{{ movie.vote_average|round(1, 'common') }}</span>
+                  from {{ movie.vote_count }} votes
+                </p>
+              </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6">
+              <div class="info-box p-3 rounded" style="background-color: #212121;">
+                <h5 style="color: #bb86fc;">Runtime</h5>
+                <p class="mb-0">{{ movie.runtime}} minutes ({{ (movie.runtime/60) |round(1) }} hours)</p>
+              </div>
+            </div>
+            
+            
+
+          <hr class="my-4" style="background-color: #333;">
+
+          <h3 style="color: #bb86fc;">Overview</h3>
+          <p class="lead">{{ movie.overview }}</p>
+
+          {% if movie.genres %}
+          <div class="mt-4">
+            <h5 style="color: #bb86fc;">Genres</h5>
+            {% for genre in movie.genres %}
+              <span class="badge bg-primary me-1 mb-1">{{ genre.name }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+          
+          <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
+            <a href="/trending" class="btn btn-outline-secondary">Back to Trending</a>
+            {% if movie.homepage %}
+            <a href="{{ movie.homepage }}" target="_blank" class="btn btn-outline-info">Official Website</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  {% endif %}
-
-  <!-- More info on the movie picked -->
-  <h1> {{ movie.original_title }}</h1>
-  
-  <p>Release Date: {{ movie.release_date }}</p><br>
- 
-  <p> Overview: {{ movie.overview }}</p>
-
-
+</div>
 {% endblock %}
