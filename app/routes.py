@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify, render_template
 import os
 import requests
+from app import app, db
 
-app = Flask(__name__)
 # authentication for the API
 api_key = os.environ["TMD_API_KEY"]
 read_key = os.environ["TMD_READ_ACCESS_KEY"]
