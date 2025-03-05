@@ -1,4 +1,4 @@
-# FlickPick
+# FrameFinders
 
 A movie recommendation web app built with Flask Discover your next favorite film with personalized picks powered by The Movie Database (TMDB).
 
