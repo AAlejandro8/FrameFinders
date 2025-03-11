@@ -31,3 +31,13 @@ A movie recommendation web app built with Flask Discover your next favorite film
 ```bash
 git clone https://github.com/AAlejandro8/FrameFinder
 cd flickpick
+```
+
+# Run locally (heroku deployment tba)
+```bash
+cd app
+pip install flask, flask-migrate, requests, flask-sqlalchemy
+Linux/WSL: export FLASK_APP=framefinders.py
+Windows: set FLASK_APP=framefinders.py
+flask run
+```
