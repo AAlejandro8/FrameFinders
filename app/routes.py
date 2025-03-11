@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, url_for
+from flask import Flask, request, render_template, url_for, jsonify
 import os
 import requests
 from app import app, db
@@ -91,6 +91,43 @@ def get_gems():
 
       return render_template("hiddengems.html", gems=gems)
 
-@app.route("/add-to-watch-list", methods=["POST"])
-def addMovie():
-      return "test"
+
+@app.route("/watch-list", methods=["POST"])
+def add_movie():
+    data = request.json
+    movie_id = data.get('movie_id')
+    # Check if movie already exists
+    existing_movie = WatchList.query.filter_by(movie_id=movie_id).first()
+    if existing_movie:
+        return jsonify({"message": "Movie already in your watchlist!"})
+    
+    # fetch details of the movie cause the DB doesnt have them :p
+    url = f'https://api.themoviedb.org/3/movie/{movie_id}'
+    response = requests.get(url, headers=headers)
+
+    movie_data = response.json()
+    
+    # Add new movie to the database
+    movie = WatchList(
+         movie_id=movie_id, 
+         title=movie_data.get('title', ''),
+         backdrop_path=movie_data.get('backdrop_path', '')
+      )
+    db.session.add(movie)
+    db.session.commit()
+    
+    return jsonify({"message": "Movie added to your watchlist!"})
+
+@app.route("/watch-list/<int:id>", methods=["DELETE"])
+def remove_movie(id):
+    # Look up by database ID, not movie_id (TMDB id)
+    movie = WatchList.query.get_or_404(id)
+    db.session.delete(movie)
+    db.session.commit()
+    return jsonify({"message": "Movie removed from your watchlist!"})
+     
+
+@app.route("/watch-list", methods=["GET"])
+def view_watchlist():
+    movies = WatchList.query.order_by(WatchList.timestamp.desc()).all()
+    return render_template("watchlist.html", movies=movies)

@@ -47,6 +47,11 @@
                             <span class="badge bg-primary me-1 mb-1">{{ genre }}</span>
                         {% endfor %}
                     </small>
+                    <br> <br>
+                    <a href="#" onclick="addToWatchList('{{ movie.id }}', '{{ movie.title }}'); return false;" 
+                       class="btn btn-primary btn-sm">
+                        Add to Watch List
+                    </a>
                 </div>
             </div>
             
@@ -58,4 +63,36 @@
 
         {% endfor %}
     </div>
+    
+    <script>
+
+        function addToWatchList(movieId, title) {
+            fetch('/watch-list', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({movie_id: movieId, title: title})
+            })
+            .then(response => response.json())
+
+            .then(data => {
+                // Better feedback
+                const messageElement = document.createElement('div');
+                messageElement.className = 'alert alert-success fixed-top mx-auto mt-3';
+                messageElement.style.width = '300px';
+                messageElement.style.zIndex = '9999';
+                messageElement.innerHTML = data.message;
+                document.body.appendChild(messageElement);
+                
+                // Remove alert after 3 seconds
+                setTimeout(() => {
+                    messageElement.remove();
+                }, 3000);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while adding the movie.');
+            });
+        }
+        
+    </script>
 {% endblock %}
