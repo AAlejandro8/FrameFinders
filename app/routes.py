@@ -39,8 +39,6 @@ def get_movies_with_genre(movies):
 
       return movie_result
       
-
-
 # main page 
 @app.route("/", methods = ["GET"])
 def home():
@@ -77,6 +75,7 @@ def movie_info(movie_id):
       
       return render_template("moreinfo.html", movie=movie)
 
+# get hidden gems based on movies with low popularity and a rich number of votes
 @app.route("/hidden-gems", methods=["GET"])
 def get_gems():
       url = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.asc&vote_average.gte=7&vote_count.gte=50"
@@ -91,7 +90,7 @@ def get_gems():
 
       return render_template("hiddengems.html", gems=gems)
 
-
+# add a movie to the database via http request
 @app.route("/watch-list", methods=["POST"])
 def add_movie():
     data = request.json
@@ -118,6 +117,7 @@ def add_movie():
     
     return jsonify({"message": "Movie added to your watchlist!"})
 
+# remove the movie from the database
 @app.route("/watch-list/<int:id>", methods=["DELETE"])
 def remove_movie(id):
     # Look up by database ID, not movie_id (TMDB id)
@@ -126,7 +126,7 @@ def remove_movie(id):
     db.session.commit()
     return jsonify({"message": "Movie removed from your watchlist!"})
      
-
+# what actually displays the WatchList to the user
 @app.route("/watch-list", methods=["GET"])
 def view_watchlist():
     movies = WatchList.query.order_by(WatchList.timestamp.desc()).all()

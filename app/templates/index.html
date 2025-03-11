@@ -64,18 +64,28 @@
         {% endfor %}
     </div>
     
+    <!-- javascript to add the movie -->
     <script>
 
         function addToWatchList(movieId, title) {
+            // HTTP call the method in the flask backend
             fetch('/watch-list', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({movie_id: movieId, title: title})
             })
-            .then(response => response.json())
 
+            .then(response => {
+                if (!response.ok){
+                    throw new Error("Network response was not okay");
+                } 
+                else{
+                    return response.json();
+                }
+            })
+                
             .then(data => {
-                // Better feedback
+                // Better feedback, Make a message div that flashes when compelete
                 const messageElement = document.createElement('div');
                 messageElement.className = 'alert alert-success fixed-top mx-auto mt-3';
                 messageElement.style.width = '300px';
@@ -88,11 +98,11 @@
                     messageElement.remove();
                 }, 3000);
             })
+            // catch an error thrown
             .catch(error => {
                 console.error('Error:', error);
                 alert('An error occurred while adding the movie.');
             });
         }
-        
     </script>
 {% endblock %}
