@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template, url_for
 import os
 import requests
 from app import app, db
+from app.models import WatchList
 
 # authentication for the API
 api_key = os.environ["TMD_API_KEY"]
@@ -89,3 +90,7 @@ def get_gems():
       ]
 
       return render_template("hiddengems.html", gems=gems)
+
+@app.route("/add-to-watch-list", methods=["POST"])
+def addMovie():
+      return "test"
