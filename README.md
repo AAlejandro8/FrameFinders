@@ -30,7 +30,7 @@ A movie recommendation web app built with Flask Discover your next favorite film
 
 ```bash
 git clone https://github.com/AAlejandro8/FrameFinder
-cd flickpick
+cd FrameFinder
 ```
 
 # Run locally (heroku deployment tba)
