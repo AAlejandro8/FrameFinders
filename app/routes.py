@@ -38,7 +38,7 @@ def get_movies_with_genre(movies):
                                     for genre_id in movie_genre_ids]
 
       return movie_result
-      
+   
 # main page 
 @app.route("/", methods = ["GET"])
 def home():
@@ -69,11 +69,23 @@ def search():
 # clicked on a movie for more info
 @app.route("/movie/<movie_id>", methods=["GET"])
 def movie_info(movie_id):
+      # GET THE MOVIE MORE INFO     
       url = f'https://api.themoviedb.org/3/movie/{movie_id}'
       response = requests.get(url, headers=headers)
       movie = response.json()
+
+      # GET THE MOVIE CAST
+      cast = f'https://api.themoviedb.org/3/movie/{movie_id}/credits?language=en-US'
+      cast_response = requests.get(cast, headers=headers)
+      movie_cast = cast_response.json()
       
-      return render_template("moreinfo.html", movie=movie)
+      # GET THE MOVIE CREW
+      crew = f'https://api.themoviedb.org/3/movie/{movie_id}/credits?language=en-US'
+      crew_response = requests.get(crew, headers=headers)
+      movie_crew = crew_response.json()
+
+
+      return render_template("moreinfo.html", movie=movie, cast=movie_cast["cast"],crew=movie_crew["crew"])
 
 # get hidden gems based on movies with low popularity and a rich number of votes
 @app.route("/hidden-gems", methods=["GET"])
