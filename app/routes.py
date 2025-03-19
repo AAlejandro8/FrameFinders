@@ -53,6 +53,16 @@ def trending_movies():
       
       return render_template("index.html",
                              movies=movies_with_genre)
+                             
+# Upcoming
+@app.route("/upcoming", methods=["GET"])
+def upcoming_movies():
+     upcoming = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1"
+     response = requests.get(upcoming,headers=headers)
+     upcoming_movies_with_genre = get_movies_with_genre(response)
+
+     return render_template("upcoming.html",
+                            movies=upcoming_movies_with_genre)
 
 
 # searched a movie
