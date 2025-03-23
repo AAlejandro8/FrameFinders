@@ -1,43 +1,31 @@
-# FrameFinders
+# [FrameFinders](https://framefinders.onrender.com/)
 
-A movie recommendation web app built with Flask Discover your next favorite film with personalized picks powered by The Movie Database (TMDB).
+A movie recommendation web app built with Flask. Discover your next favorite film with personalized picks powered by The Movie Database (TMDb).
 
 ## Features
 
-- Browse trending movies.
-- Get tailored recommendations based on your preferences.
-- Find hidden gems.
-- Add films to a watchlist for later.
-- Search for films by title, genre, or actor.
-- Responsive design for desktop and mobile.
+- Browse trending movies from TMDb.
+- Uncover hidden gems in the movie world.
+- Save films to a watchlist with PostgreSQL persistence.
+- Search by title, genre, or actor.
+- Responsive design for desktop and mobile (via Bootstrap).
 
 ## Tech Stack
 
-- **Backend**: Flask (Python) - Lightweight API serving movie data.
-- **Frontend**: Jinja2 - Templating engine for dynamic HTML.
-  - **Styles**: Bootstrap - Easy to use CSS style sheets
-- **API**: The Movie Database (TMDB) - Movie data and metadata.
-- **Source Control**: Git - Controlled devlopment.
+- **Backend**: Flask (Python) - Lightweight framework for API and routing.
+- **Frontend**: Jinja2 - Dynamic HTML templating; Bootstrap - Responsive CSS styling.
+- **Database**: PostgreSQL - Persistent storage for watchlists.
+- **API**: The Movie Database (TMDb) - Rich movie data and metadata.
+- **Source Control**: Git - Version control via GitHub.
+- **DevOps**: 
+  - Docker - Containerized app for consistent deployment.
+  - Render - Automated CI/CD and cloud hosting.
 
 ## Prerequisites
 
 - Python 3.9+
-- TMDB API key (sign up at [themoviedb.org](https://www.themoviedb.org/))
+- TMDb API key (get one at [themoviedb.org](https://www.themoviedb.org/))
+- Docker (optional, for containerized runs)
+- Render account (for deployment)
 
-## Setup
 
-### Clone the Repository
-
-```bash
-git clone https://github.com/AAlejandro8/FrameFinder
-cd FrameFinder
-```
-
-# Run locally (heroku deployment tba)
-```bash
-cd app
-pip install -r requirements.txt
-Linux/WSL: export FLASK_APP=framefinders.py
-Windows: set FLASK_APP=framefinders.py
-flask run
-```
