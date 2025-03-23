@@ -36,7 +36,7 @@ cd FrameFinder
 # Run locally (heroku deployment tba)
 ```bash
 cd app
-pip install flask, flask-migrate, requests, flask-sqlalchemy
+pip install -r requirements.txt
 Linux/WSL: export FLASK_APP=framefinders.py
 Windows: set FLASK_APP=framefinders.py
 flask run
